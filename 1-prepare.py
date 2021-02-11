@@ -19,7 +19,7 @@ dataframe = pandas.read_csv("Users/grandmaison/Desktop/RDN/dataset/train.csv")
 ######       Note: you can use the 'columns' member of pandas.DataFrame to list the attributes
 ######       and the dataset description to guide you (UNSW-NB15_features.csv)
 
-for attr in ["proto","service","state","attack_cat"]:
+for attr in ["proto","service","state"]:
     conf["attributes"][attr] = "categorical"
 
 ###### Replace [...] with a list of all numerical attributes
