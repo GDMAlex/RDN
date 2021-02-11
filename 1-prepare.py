@@ -1,4 +1,3 @@
-# commentaire de test
 import libTP
 import pandas
 #test D'ALEX 
@@ -14,22 +13,22 @@ conf = {
 }
 
 ###### TODO: Load the "train.csv" file using pandas
-dataframe = pandas.read_csv("/Users/grandmaison/Desktop/TP/dataset/train.csv")
+dataframe = pandas.read_csv("Users/grandmaison/Desktop/RDN/dataset/train.csv")
 
 ###### TODO: explore data and define the type (categorical, numerical or binary) of each attribute
 ######       Note: you can use the 'columns' member of pandas.DataFrame to list the attributes
 ######       and the dataset description to guide you (UNSW-NB15_features.csv)
 
-###### Replace [...] with a list of all categorical attributes
-for attr in dataframe.columns(1):
+for attr in ["proto","service","state","attack_cat"]:
     conf["attributes"][attr] = "categorical"
 
 ###### Replace [...] with a list of all numerical attributes
-for attr in dataframe.columns(2):
+for attr in ["dur","spkts","dpkts","sbytes","dbytes","rate","sttl","dttl","dload","sloss","sinpkt","dinpkt","synack","ackdat","smean","dmean"
+,"response_body_len","ct_srv_src","ct_dst_ltm","ct_src_dport_ltm","ct_dst_src_ltm","is_ftp_login","ct_ftp_cmd","ct_src_ltm","ct_srv_dst"]:
     conf["attributes"][attr] = "numerical"
 
-###### Replace [...] with a list of all binary attributes
-for attr in dataframe.columns(37):
+###### Replace [...] with a list of all binary attributes  
+for attr in ["trans_depth","ct_flw_http_mthd","is_sm_ips_ports"]:
     conf["attributes"][attr] = "binary"
 
 ###### TODO: create the transformation functions and find their parameters
