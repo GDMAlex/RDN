@@ -1,7 +1,7 @@
 import libTP
 import pandas as pd
 import numpy as np
-#test D'ALEX 
+import json 
 
 ###### The objective of this step is to create a configuration JSON file that will be used
 ###### to setup the autoencoder structure, as well as find and save the parameters for 
@@ -81,7 +81,11 @@ for attr, t in conf["attributes"].items():
 ###### TODO: Don't forget to save:
 ######       - The conf inside conf/config.json
 ######         You can use python's built-in json module to do so
+    
+with open("./conf/config.json", 'w') as json_file:
+    json.dump(conf, json_file)
+
 ######       - The fitted feature encoder objects
 ######         The function is already implemented inside libTP.feature_engineering.helpers module  
 
-
+libTP.feature_engineering.helpers.save_transforms(transforms)
