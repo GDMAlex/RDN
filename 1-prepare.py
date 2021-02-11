@@ -14,7 +14,7 @@ conf = {
 }
 
 ###### TODO: Load the "train.csv" file using pandas
-dataframe = pd.read_csv("Users/grandmaison/Desktop/RDN/dataset/train.csv")
+dataframe = pd.read_csv("./dataset/train.csv")
 
 ###### TODO: explore data and define the type (categorical, numerical or binary) of each attribute
 ######       Note: you can use the 'columns' member of pandas.DataFrame to list the attributes
@@ -36,6 +36,8 @@ for attr in ["trans_depth","ct_flw_http_mthd","is_sm_ips_ports"]:
 ######       Before that, you should complete the code inside libTP/feature_engineering folder
 ######       An example is provided for the categorical feature encoder
 ######       transforms is a dictionary of the form {attribute_name: feature_encoder_object}
+
+
 transforms = {}
 
 for attr, t in conf["attributes"].items():
@@ -59,6 +61,21 @@ for attr, t in conf["attributes"].items():
 ######            "param1": ...
 ######            etc...
 ######       }
+
+
+for attr, t in conf["attributes"].items():
+    conf["network"][attr] = {"type": t, "output_size": 2}
+    
+    if t == "categorical":
+        conf["network"][attr]["voc_size"] = transforms[attr].max_size
+        conf["network"][attr]["output_size"] = 3
+    
+    if t == "numerical":
+        conf["network"][attr]["output_size"] = 2
+    
+    if t == "binary":
+        conf["network"][attr]["output_size"] = 2
+
 
 
 ###### TODO: Don't forget to save:
