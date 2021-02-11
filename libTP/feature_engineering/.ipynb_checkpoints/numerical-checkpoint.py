@@ -11,4 +11,5 @@ class NumericalFE(BaseFE):
         self.sigma = data.std()
         
     def transform(self, data):
-        return ((data - self.mu)/self.sigma).astype(np.float32)
+ 
+    return ((data - self.mu)/self.sigma).astype(np.float32)

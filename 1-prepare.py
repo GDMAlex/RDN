@@ -1,5 +1,6 @@
 import libTP
-import pandas
+import pandas as pd
+import numpy as np
 #test D'ALEX 
 
 ###### The objective of this step is to create a configuration JSON file that will be used
@@ -13,7 +14,7 @@ conf = {
 }
 
 ###### TODO: Load the "train.csv" file using pandas
-dataframe = pandas.read_csv("Users/grandmaison/Desktop/RDN/dataset/train.csv")
+dataframe = pd.read_csv("Users/grandmaison/Desktop/RDN/dataset/train.csv")
 
 ###### TODO: explore data and define the type (categorical, numerical or binary) of each attribute
 ######       Note: you can use the 'columns' member of pandas.DataFrame to list the attributes
@@ -36,6 +37,17 @@ for attr in ["trans_depth","ct_flw_http_mthd","is_sm_ips_ports"]:
 ######       An example is provided for the categorical feature encoder
 ######       transforms is a dictionary of the form {attribute_name: feature_encoder_object}
 transforms = {}
+
+for attr, t in conf["attributes"].items():
+
+    if t == "categorical":
+        transforms[attr] = libTP.feature_engineering.CategoricalFE()
+    if t == "numerical":
+        transforms[attr] = libTP.feature_engineering.NumericalFE()
+    if t == "binary":
+        transforms[attr] = libTP.feature_engineering.BinaryFE()
+
+    transforms[attr].fit(dataframe[attr])
 
 
 ###### TODO: Set parameters required to build the network's structure
