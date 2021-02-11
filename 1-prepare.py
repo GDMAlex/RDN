@@ -1,5 +1,6 @@
 import libTP
 import pandas
+#test D'ALEX 
 
 ###### The objective of this step is to create a configuration JSON file that will be used
 ###### to setup the autoencoder structure, as well as find and save the parameters for 
