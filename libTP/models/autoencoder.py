@@ -56,7 +56,9 @@ class AutoEncoder(LightningModule):
         scaled_loss = {}
         for attr in loss_dict:
             # TODO: scale loss_dict[attr] before assigning it
-            scaled_loss[attr] = loss_dict[attr]
+            scaled_loss[attr] = (loss_dict[attr]-self.scorer_parameters[attr]["mu"])/self.scorer_parameters[attr]["sigma"]
+            scaled_loss[attr] = torch.clip(scaled_loss[attr], 0, 10)
+            
         return torch.sum(torch.stack([v for k, v in scaled_loss.items()]), dim=0)
 
     def calibration_step(self, batch):
@@ -74,7 +76,10 @@ class AutoEncoder(LightningModule):
             # TODO: Find the parameters for the scoring function using 'losses'
             for attr in losses:
                 # TODO: calculate parameters here and store them inside self.scorer_parameters 
-                self.scorer_parameters[attr] = {}
+                self.scorer_parameters[attr] = {
+                    'mu': losses[attr].mean(),
+                    'sigma': losses[attr].std()
+                }
     
     def training_step(self, batch, batch_idx):
         reprod = self.autoencoder(batch)

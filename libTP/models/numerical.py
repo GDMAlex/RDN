@@ -25,6 +25,6 @@ class NumericalLoss(torch.nn.Module):
         self.loss = torch.nn.MSELoss() 
     
     def forward(self, yh, y):
-        yh = self(x)
+        yh = self(x) ## ou self.layer(x) 
         loss = self.loss(yh,y)
         return loss
