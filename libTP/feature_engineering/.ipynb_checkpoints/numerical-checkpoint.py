@@ -1,4 +1,5 @@
 from .base import BaseFE
+import numpy as np
 
 class NumericalFE(BaseFE):
     def __init__(self):
@@ -11,5 +12,4 @@ class NumericalFE(BaseFE):
         self.sigma = data.std()
         
     def transform(self, data):
- 
-    return ((data - self.mu)/self.sigma).astype(np.float32)
+        return ((data - self.mu)/self.sigma).astype(np.float32)

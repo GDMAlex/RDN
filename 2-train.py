@@ -28,7 +28,7 @@ transformed = libTP.feature_engineering.helpers.transform_df(data,transforms)
 early_stopping = pl.callbacks.EarlyStopping(min_delta=0.01, patience=10, monitor='val_loss')
 checkpoints = pl.callbacks.ModelCheckpoint(monitor="val_loss", dirpath="./conf/checkpoints/")
 trainer = pl.Trainer(callbacks=[early_stopping, checkpoints], max_epochs=1000)
-trainer.fit(model, train_dataloader=train_loader, val_dataloaders=validation_loader)
+trainer.fit(model, train_dataloader= train_loader, val_dataloaders= validation_loader)
 model = MyNet.load_from_checkpoint(checkpoints.best_model_path)
 ###### TODO: use the test data to calibrate the scoring functions of the autoencoder
 

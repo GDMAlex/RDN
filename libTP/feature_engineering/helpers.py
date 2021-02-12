@@ -19,6 +19,13 @@ def load_transforms(conf, base_path='./conf/fe'):
     transforms = {}
     with open(base_path+'/test', 'rb') as f:
         transforms = np.load(f,allow_pickle = True)
+        
+    #transforms = dict(enumerate(transforms.flatten(), 1))
+    transforms = transforms.tolist() 
+    #transforms.ravel() 
+    #transforms.reshape(-1)
+    #print(type(transforms))
+    #print(transforms)
     return transforms
 
 ### takes a dataframe and a dictionary in the form {attr: FeatureExtractor} as input 

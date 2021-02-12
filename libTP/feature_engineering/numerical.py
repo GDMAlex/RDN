@@ -1,4 +1,5 @@
 from .base import BaseFE
+import numpy as np
 
 class NumericalFE(BaseFE):
     def __init__(self):
