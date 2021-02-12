@@ -11,7 +11,7 @@ with open('./conf/config.json') as json_file:
 ######       You can use libTP.feature_engineering.helpers
 transforms = libTP.feature_engineering.helpers.load_transforms(conf)
 ###### TODO: load "train.csv" using pandas
-data = load.read_csv("./dataset/train.csv")
+data = pd.read_csv("./dataset/train.csv")
 
 ###### TODO: Complete the code in libTP/models 
 model = libTP.models.AutoEncoder(conf["network"])

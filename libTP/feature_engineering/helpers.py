@@ -18,7 +18,7 @@ def load_transforms(conf, base_path='./conf/fe'):
     # TODO implement transforms saving/loading functions
     transforms = {}
     with open(base_path+'/test', 'rb') as f:
-        transforms = np.load(f)
+        transforms = np.load(f,allow_pickle = True)
     return transforms
 
 ### takes a dataframe and a dictionary in the form {attr: FeatureExtractor} as input 
