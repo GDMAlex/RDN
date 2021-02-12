@@ -5,7 +5,7 @@ import torch
 class NumericalEncoder(torch.nn.Module):
     def __init__(self, params):
         super().__init__()
-        self.layer = Sequential( Linear(1, params["output_size"]),Sigmoid() )
+        self.layer = torch.nn.Sequential( torch.nn.Linear(1, params["output_size"]), torch.nn.Sigmoid() )
         
     def forward(self, x):
         return self.layer(x)
@@ -14,7 +14,7 @@ class NumericalEncoder(torch.nn.Module):
 class NumericalDecoder(torch.nn.Module):
     def __init__(self, input_dim, params):
         super().__init__()
-        self.layer = Sequential( Linear(params["output_size"],1), ReLU() )
+        self.layer = torch.nn.Sequential( torch.nn.Linear(params["output_size"],1), torch.nn.ReLU() )
     def forward(self, x):
         return self.layer(x)
 
@@ -25,5 +25,6 @@ class NumericalLoss(torch.nn.Module):
         self.loss = torch.nn.MSELoss() 
     
     def forward(self, yh, y):
-        yh = self.layer(y)
-        return yh
+        yh = self(x)
+        loss = self.loss(yh,y)
+        return loss
