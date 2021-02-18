@@ -1,7 +1,10 @@
 import libTP
 import pandas as pd 
 import pytorch_lightning as pl
+
 import json
+
+print(pl.__version__)
 
 ###### TODO: load configuration created at the previous step
 with open('./conf/config.json') as json_file:
@@ -25,10 +28,13 @@ transformed = libTP.feature_engineering.helpers.transform_df(data,transforms)
 ######       Don't forget to split the dataset into 3 parts: train, evaluation, test
 ######       This can be done using the split method of class libTP.misc.dataset.PandasDataset
 
+train_loader = torch.utils.data.DataLoader(train_set, batch_size=1, shuffle=True)
+
+
 early_stopping = pl.callbacks.EarlyStopping(min_delta=0.01, patience=10, monitor='val_loss')
 checkpoints = pl.callbacks.ModelCheckpoint(monitor="val_loss", dirpath="./conf/checkpoints/")
 trainer = pl.Trainer(callbacks=[early_stopping, checkpoints], max_epochs=1000)
-trainer.fit(model, train_dataloader= train_loader, val_dataloaders= validation_loader)
+trainer.fit(model, train_dataloader= , val_dataloaders= )
 model = MyNet.load_from_checkpoint(checkpoints.best_model_path)
 ###### TODO: use the test data to calibrate the scoring functions of the autoencoder
 
