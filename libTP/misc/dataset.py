@@ -37,5 +37,5 @@ class PandasDataset(torch.utils.data.Dataset):
         if isinstance(idx, int):
             idx = [idx]
 
-        subset = df.iloc[idx]        
-        return {k: torch.tensor(subset[k].values) for k in subset.columns}
+        subset = self.data.iloc[idx]        
+        return {k: torch.tensor(subset[k].values).unsqueeze(-1) for k in subset.columns}

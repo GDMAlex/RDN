@@ -1,7 +1,6 @@
 import libTP
 import pandas as pd 
 import pytorch_lightning as pl
-
 import json
 
 print(pl.__version__)
@@ -20,7 +19,6 @@ data = pd.read_csv("./dataset/train.csv")
 model = libTP.models.AutoEncoder(conf["network"])
 
 ###### TODO: transform dataframe (you can use libTP.feature_engineering.helpers)
-
 transformed = libTP.feature_engineering.helpers.transform_df(data,transforms)
 
 ###### TODO: train the model. You can use functions inside libTP.misc.dataset to create
@@ -28,14 +26,20 @@ transformed = libTP.feature_engineering.helpers.transform_df(data,transforms)
 ######       Don't forget to split the dataset into 3 parts: train, evaluation, test
 ######       This can be done using the split method of class libTP.misc.dataset.PandasDataset
 
-train_loader = torch.utils.data.DataLoader(train_set, batch_size=1, shuffle=True)
+
+#Split train , val , test
+train , evaluation , test = libTP.misc.dataset.PandasDataset(transformed).split() #Split pour avoir train , evaluation et test 
+#Batch sur train , val , test 
+train_batch = libTP.misc.dataset.batch_loader(train)
+evaluation_batch = libTP.misc.dataset.batch_loader(evaluation)
+test_batch = libTP.misc.dataset.batch_loader(test)
 
 
-early_stopping = pl.callbacks.EarlyStopping(min_delta=0.01, patience=10, monitor='val_loss')
-checkpoints = pl.callbacks.ModelCheckpoint(monitor="val_loss", dirpath="./conf/checkpoints/")
-trainer = pl.Trainer(callbacks=[early_stopping, checkpoints], max_epochs=1000)
-trainer.fit(model, train_dataloader= , val_dataloaders= )
-model = MyNet.load_from_checkpoint(checkpoints.best_model_path)
+#Entraînement
+trainer = pl.Trainer(max_epochs=1000)
+trainer.test(test_dataloaders=test_batch )
+trainer.fit(model, train_dataloader=train_batch, val_dataloaders=evaluation_batch )
+
+
 ###### TODO: use the test data to calibrate the scoring functions of the autoencoder
-
 ###### TODO: save the trained model and go on to the next step
