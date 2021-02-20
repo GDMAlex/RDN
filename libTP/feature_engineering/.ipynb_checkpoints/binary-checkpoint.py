@@ -18,4 +18,4 @@ class BinaryFE(BaseFE):
     
     def transform(self, data):
         #### TODO: apply the binary feature transformation to new data
-        return self.binaire
+        return self.binaire.astype(np.float32)

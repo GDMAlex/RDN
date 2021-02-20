@@ -34,10 +34,9 @@ train_batch = libTP.misc.dataset.batch_loader(train)
 evaluation_batch = libTP.misc.dataset.batch_loader(evaluation)
 test_batch = libTP.misc.dataset.batch_loader(test)
 
-
 #Entraînement
-trainer = pl.Trainer(max_epochs=1000)
-trainer.test(test_dataloaders=test_batch )
+trainer = pl.Trainer(callbacks=[early_stopping, checkpoints], max_epochs=1000)
+
 trainer.fit(model, train_dataloader=train_batch, val_dataloaders=evaluation_batch )
 
 
